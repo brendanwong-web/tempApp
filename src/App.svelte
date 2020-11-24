@@ -20,7 +20,20 @@
 		margin: 0 auto;
 	}
 
-
+	button {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 500; 
+    background: #278386;
+    padding: 2rem 2rem;
+		font: inherit;
+		font-size: 3rem;
+    outline: none;
+		border: none;
+		border-radius: 7px;
+	}
 </style>
 
 
