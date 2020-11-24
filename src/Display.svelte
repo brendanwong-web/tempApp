@@ -1,4 +1,7 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
+
   import temps from './temp-store';
   import {onMount} from 'svelte';
   let dates;
@@ -62,6 +65,16 @@
   .right h2 {
     text-align: right;
   }
+
+  button {
+    background: white;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding-top: 12px;
+    color: red;
+    font-weight: 700;
+  }
 </style>
 <div class="container">
   {#if dates && temperatures}
@@ -72,6 +85,9 @@
       <h2>{times[i]}</h2>
       <h2>{temperatures[i]}</h2>
     </div>
+    {#if i !== 0}
+    <button on:click={()=>{dispatch('delete', i)}}>X</button>
+    {/if}
   </div>
   {/each}
 {/if}

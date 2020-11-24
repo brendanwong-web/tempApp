@@ -1,7 +1,9 @@
 <script>
   import temp from "./temp-store";
   import {onMount} from "svelte";
+  import Modal from './Modal.svelte';
   let inputtedDate = undefined;
+  let visible = false;
   onMount(() => {
     console.log('mounting');
     fetch(`https://temp-70e0d.firebaseio.com/${uid}/temps.json`)
@@ -11,7 +13,6 @@
       }
       return res.json()
     }).then(data => {
-        console.log(data);
         if (data) {
           temp.setTemps(data);
           console.log('set data');
@@ -40,6 +41,7 @@
       return res.json()
     }).then(data => {
       if (data) {
+        let formatted = {};
         var today = new Date;
         var key = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+today.getMinutes();
         if (inputtedDate) {
@@ -58,6 +60,7 @@
         }
         temp.setTemps(newFormatted);
         console.log('finally submitted');
+        visible = true;
       }).catch(err => {
         console.log(err);
       }) 
@@ -81,6 +84,7 @@
         }
         temp.setTemps(formatted);
         console.log('finally submitted');
+        visible = true;
       }).catch(err => {
         console.log(err);
       }) 
@@ -157,8 +161,15 @@
   }
 
 </style>
+<Modal {visible} on:close={() => {visible = false}}>
+  <h1>Submitted temperature!</h1>
+</Modal>
 <div class="container">
-  <input placeholder="YYYY-MM-DD HH:MM" type='text' bind:value={inputtedDate}>
+  {#if tempToday}
+  <h2>Submitting <span>{tempToday.slice(0,2) + '.' + tempToday.slice(2)} °C</span> for <span>{inputtedDate ? inputtedDate : date}</span></h2>
+  {/if}
+  <label for="manual">Format: YYYY-MM-DD HH:MM</label>
+  <input placeholder="Manual input" type='text' name="manual" bind:value={inputtedDate}>
   <div class="submitter">
     <select bind:value={tempToday} name="temp" id="temp">
       {#each randomTemps as temp}
@@ -167,7 +178,4 @@
     </select>
     <button type="submit" on:click={submitTemp}>Submit</button>
   </div>
-  {#if tempToday}
-    <h2>Submitting <span>{tempToday.slice(0,2) + '.' + tempToday.slice(2)} °C</span> for <span>{inputtedDate ? inputtedDate : date}</span></h2>
-  {/if}
 </div>
