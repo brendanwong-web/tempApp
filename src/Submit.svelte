@@ -12,8 +12,12 @@
       return res.json()
     }).then(data => {
         console.log(data);
-        temp.setTemps(data);
-        console.log('set data');
+        if (data) {
+          temp.setTemps(data);
+          console.log('set data');
+        } else {
+          console.log('new user');
+        }
     }).catch(err => {
       console.log(err);
       })
@@ -35,29 +39,53 @@
       }
       return res.json()
     }).then(data => {
-      var today = new Date;
-      var key = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      let formatted = {};
-      if (inputtedDate) {
-        formatted[inputtedDate] = tempToday.slice(0,2) + '.' + tempToday.slice(2);
-      } else {
-        formatted[key] = tempToday.slice(0,2) + '.' + tempToday.slice(2);
+      if (data) {
+        var today = new Date;
+        var key = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        let formatted = {};
+        if (inputtedDate) {
+          formatted[inputtedDate] = tempToday.slice(0,2) + '.' + tempToday.slice(2);
+        } else {
+          formatted[key] = tempToday.slice(0,2) + '.' + tempToday.slice(2);
+        }
+        let newFormatted = Object.assign(data, formatted);
+        fetch(`https://temp-70e0d.firebaseio.com/${uid}/temps.json`, { 
+          method: "PUT",
+          body: JSON.stringify(newFormatted),
+          headers: {'content-type': 'application/JSON'}
+        }).then(res => {
+        if(!res.ok) {
+          throw new Error('error in res');
+        }
+        temp.setTemps(newFormatted);
+        console.log('finally submitted');
+      }).catch(err => {
+        console.log(err);
+      }) 
       }
-      let newFormatted = Object.assign(data, formatted);
-      fetch(`https://temp-70e0d.firebaseio.com/${uid}/temps.json`, { 
-      method: "PUT",
-      body: JSON.stringify(newFormatted),
-      headers: {'content-type': 'application/JSON'}
-     }).then(res => {
-       if(!res.ok) {
-         throw new Error('error in res');
-       }
-      temp.setTemps(newFormatted);
-      console.log('finally submitted');
-     }).catch(err => {
-       console.log(err);
-     })
-
+      else {
+        var today = new Date;
+        var key = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        let formatted = {};
+        if (inputtedDate) {
+          formatted[inputtedDate] = tempToday.slice(0,2) + '.' + tempToday.slice(2);
+        } else {
+          formatted[key] = tempToday.slice(0,2) + '.' + tempToday.slice(2);
+        }
+        fetch(`https://temp-70e0d.firebaseio.com/${uid}/temps.json`, { 
+          method: "PUT",
+          body: JSON.stringify(formatted),
+          headers: {'content-type': 'application/JSON'}
+        }).then(res => {
+        if(!res.ok) {
+          throw new Error('error in res');
+        }
+        temp.setTemps(formatted);
+        console.log('finally submitted');
+      }).catch(err => {
+        console.log(err);
+      }) 
+      }
     }).catch(err => {
       console.log(err);
       })
