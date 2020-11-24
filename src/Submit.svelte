@@ -24,7 +24,7 @@
   })
   export let uid;
   var today = new Date;
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+today.getMinutes();
   let randomTemps = [
     "355", "356", "357", "358", "359", "360",
     "361", "362", "363", "364", "365", "366",
@@ -41,8 +41,7 @@
     }).then(data => {
       if (data) {
         var today = new Date;
-        var key = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        let formatted = {};
+        var key = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+today.getMinutes();
         if (inputtedDate) {
           formatted[inputtedDate] = tempToday.slice(0,2) + '.' + tempToday.slice(2);
         } else {
@@ -65,7 +64,7 @@
       }
       else {
         var today = new Date;
-        var key = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var key = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+today.getMinutes();
         let formatted = {};
         if (inputtedDate) {
           formatted[inputtedDate] = tempToday.slice(0,2) + '.' + tempToday.slice(2);
@@ -113,16 +112,19 @@
   h2 span {
     display: block;
     color: rgb(0, 0, 0);
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin: 0.7rem auto;
+    padding: 0.7rem 1rem;
   }
 
   h2 span:first-child {
-    border: 2px solid red;
+    background-color: rgb(252, 178, 178);
+    border-radius: 7px;
   }
 
   h2 span:last-child {
-    border: 2px solid rgb(57, 55, 185); 
+    background-color: rgb(179, 193, 255);
+    border-radius: 7px;
   }
 
   .submitter {
@@ -156,7 +158,7 @@
 
 </style>
 <div class="container">
-  <input placeholder="Manual input: YYYY-MM-DD" type='text' bind:value={inputtedDate}>
+  <input placeholder="YYYY-MM-DD HH:MM" type='text' bind:value={inputtedDate}>
   <div class="submitter">
     <select bind:value={tempToday} name="temp" id="temp">
       {#each randomTemps as temp}

@@ -3,13 +3,28 @@
   import {onMount} from 'svelte';
   let dates;
   let temperatures;
+  let times;
+  let dateFixed;
 
+  let getTime = (d) => {
+    let list;
+    list = d.split(' ');
+    return list[1]
+  }  
+  let getDate = (d) => {
+    let list;
+    list = d.split(' ');
+    return list[0]
+  }  
   onMount(() => {
       const unsubscribe = temps.subscribe(its => {
       dates = Object.keys(its);
+      times = dates.map(getTime);
+      dateFixed = dates.map(getDate);
+      times.unshift('Time: ');
       temperatures = Object.values(its);
-      dates.unshift('Date:');
-      temperatures.unshift('Temperature:');
+      dateFixed.unshift('Date:');
+      temperatures.unshift('Temp:');
     });
   })
 
@@ -31,13 +46,32 @@
     border-bottom: 2px solid grey;
   }
 
+  .item h2{
+    font-size: 16px;
+  }
+  .item h2 {
+    flex: 1;
+    justify-content: start;
+    text-align: left;
+  }
+  .right {
+    justify-content: space-between;
+    flex: 1;
+    display: flex;
+  }
+  .right h2 {
+    text-align: right;
+  }
 </style>
 <div class="container">
   {#if dates && temperatures}
-  {#each dates as date, i} 
+  {#each dateFixed as date, i} 
   <div class="item">
-    <h1>{date}</h1>
-    <h2>{temperatures[i]}</h2>
+    <h2 id="date">{date}</h2>
+    <div class="right">
+      <h2>{times[i]}</h2>
+      <h2>{temperatures[i]}</h2>
+    </div>
   </div>
   {/each}
 {/if}
