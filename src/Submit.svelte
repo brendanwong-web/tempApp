@@ -25,7 +25,7 @@
   })
   export let uid;
   var today = new Date;
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+today.getMinutes();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+String(today.getMinutes()).padStart(2, "0");;
   let randomTemps = [
     "355", "356", "357", "358", "359", "360",
     "361", "362", "363", "364", "365", "366",

@@ -127,6 +127,12 @@
       /* Use the Roboto font that is loaded in the <head> */
       font-family: 'Roboto', sans-serif;
     }
+
+	.top {
+		background-color: #f0c491bb;
+		padding: 1rem 1rem;
+		border-radius: 7px;
+	}
 </style>
 
 <svelte:head>
@@ -138,12 +144,13 @@
 </Modal>
 <section>
 	{#if user}
-			<div class="logo">
-				<img src='drawing.png' alt="logo">
-			</div>
-			<Profile {...user} />
+	<div class="top">
+		<div class="logo">
+			<img src='drawing.png' alt="logo">
+		</div>
+		<Profile {...user} />
+	</div>
 <!-- 			<button on:click={ () => auth.signOut() }>Logout</button> -->
-			<hr>
 			<Submit uid={user.uid} />
 			<Display on:delete={deleteItem}/>
 	{:else}

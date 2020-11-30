@@ -8,15 +8,13 @@
 <style>
   .container {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content: center;
   }
 
   h3 {
     text-transform: capitalize;
     color: #031316;
-    font-size: 2.6rem;
-    margin-bottom: 0.7rem;
+    font-size: 2rem;
   }
 
   img {
@@ -30,6 +28,5 @@
 
 
 <div class="container">
-  <img src={ photoURL } width="100" alt="user avatar">
   <h3>Hi { name }!</h3>
 </div>
