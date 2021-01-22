@@ -130,9 +130,48 @@
       font-family: 'Roboto', sans-serif;
     }
 
-	.top {
+		@media (min-width: 768px) {
+			section {
+				box-sizing: border-box;
+				margin: 0;
+				width: 30vw;
+				height: 90vh;
+				padding-top: 1rem;
+				padding-bottom: 1rem;
+				padding-left: 10px;
+				background: rgba(255,255,255,0.4);
+				border: 2px solid rgba(255,255,255,0.2);
+				backdrop-filter: blur(5px);
+				-webkit-backdrop-filter: blur(5px);
+				margin: 2rem auto;
+				display: flex;
+				flex-direction: column;
+				overflow-y: scroll;
+				overflow-x: hidden;
+				border-radius: 20px;
+			}
 
-	}
+			section::-webkit-scrollbar-track
+			{
+				border-radius: 20px;
+				background-color: rgba(77, 77, 77, 0.692);
+			}
+
+			section::-webkit-scrollbar
+			{
+				width: 5px;
+				background-color: #F5F5F5;
+			}
+
+			section::-webkit-scrollbar-thumb
+			{
+				border-radius: 10px;
+				-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+				background-color: rgb(211, 211, 211);
+			}
+
+
+		}
 </style>
 
 <svelte:head>
