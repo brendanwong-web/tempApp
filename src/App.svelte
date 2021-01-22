@@ -69,13 +69,19 @@
 </script>
 <style>
 
-	.logo {
-		width: 100%;
+	section {
+		box-sizing: border-box;
+		margin: 0;
+		width: 100vw;
+		height: 100vh;
+		padding-top: 1rem;
+		padding-left: 10px;
+		background: rgba(255,255,255,0.4);
+		border: 1px solid rgba(255,255,255,0.2);
+		backdrop-filter: blur(5px);
+		-webkit-backdrop-filter: blur(5px);
 	}
-	.logo img {
-		width: 300px;
-		height: auto;
-	}
+
 	.logoSign {
 		width: 100%;
 		margin: 5rem auto;
@@ -84,11 +90,7 @@
 		width: 300px;
 		height: auto;
 	}
-	section {
-		text-align: center;
-		padding: 1rem 1rem;
-		margin: 0 auto;
-	}
+
 
 	#customBtn {
 		margin: 2rem auto;
@@ -129,9 +131,7 @@
     }
 
 	.top {
-		background-color: #f0c491bb;
-		padding: 1rem 1rem;
-		border-radius: 7px;
+
 	}
 </style>
 
@@ -145,12 +145,9 @@
 <section>
 	{#if user}
 	<div class="top">
-		<div class="logo">
-			<img src='drawing.png' alt="logo">
-		</div>
 		<Profile {...user} />
 	</div>
-<!-- 			<button on:click={ () => auth.signOut() }>Logout</button> -->
+		<!-- 	<button on:click={ () => auth.signOut() }>Logout</button> -->
 			<Submit uid={user.uid} />
 			<Display on:delete={deleteItem}/>
 	{:else}

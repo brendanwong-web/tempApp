@@ -40,7 +40,13 @@
     justify-content: space-between;
     padding: 0 1rem 1rem;
     margin: 0 1rem;
-    border: 2px solid rgb(10, 166, 172);
+    background: rgba(255, 255, 255, 0.13);
+    box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(7px);
+    border-radius: 20px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    border-left: 1px solid rgba(255,255,255,0.2);
+    color: rgba(2, 4, 20, 0.89);
   }
 
   .item {
@@ -86,7 +92,7 @@
       <h2>{temperatures[i]}</h2>
     </div>
     {#if i !== 0}
-    <button on:click={()=>{dispatch('delete', i)}}>X</button>
+<!--     <button on:click={()=>{dispatch('delete', i)}}>X</button> -->
     {/if}
   </div>
   {/each}

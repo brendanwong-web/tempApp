@@ -98,7 +98,7 @@
 </script>
 <style>
   .container {
-    padding: 0rem 1rem 1rem;
+    padding: 0rem 1rem 0rem;
     text-align: center;
   }
 
@@ -110,55 +110,73 @@
   }
 
   h2 {
-    color: rgb(56, 56, 56);
-    font-size: 1.5rem;
+    font-size: 1rem;
+    text-align: center;
+    color: rgba(61, 61, 61, 0.76);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
   h2 span {
+    font-weight: 700;
     display: block;
     color: rgb(0, 0, 0);
-    font-size: 1.8rem;
-    margin: 0.7rem auto;
-    padding: 0.7rem 1rem;
+    font-size: 1.3rem;
+    margin: 5px auto;
   }
 
-  h2 span:first-child {
-    background-color: rgb(252, 178, 178);
-    border-radius: 7px;
-  }
 
-  h2 span:last-child {
-    background-color: rgb(179, 193, 255);
-    border-radius: 7px;
+  input {
+    border-radius: 20px;
+    margin: 0.5rem 0;
+    padding-left: 1rem;
+    font-size: 0.8rem;
   }
 
   .submitter {
-    margin: 2rem auto;
-    margin-bottom: 0;
-    display: flex;
+    height: 1px;
+    display: none;
     font-size: 1.5rem;
     justify-content: center;
+    width: 90%;
+    align-items: stretch;
   }
 
-  .submitter select {
-    flex: 1;
+  select {
+    width: 40%;
+    margin-right: 1rem;
+    font-size: 1rem;
     text-align: center;
-    border: 2px solid #278386;
-    border-right: 0px solid transparent;
+    border-radius: 30px;
+    background-color: rgba(141, 170, 204, 0.349);
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
-  .submitter button {
-    flex: 2;
-    color: white;
+  #submit {
+    color: rgb(0, 0, 0);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    flex: 3;
+    font-size: 1rem;
     cursor: pointer;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 500; 
-    background: #278386;
-    padding: 0.5rem 0rem;
-    font: inherit;
-    outline: none;
+    background-color: transparent;
     border: none;
+    outline: none;
   }
+
+  .displayer {
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+    border-radius: 20px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    border-left: 1px solid rgba(255,255,255,0.2);
+    width: 100%;
+}
 
 </style>
 <Modal {visible} on:close={() => {visible = false}}>
@@ -166,16 +184,25 @@
 </Modal>
 <div class="container">
   {#if tempToday}
-  <h2>Submitting <span>{tempToday.slice(0,2) + '.' + tempToday.slice(2)} °C</span> for <span>{inputtedDate ? inputtedDate : date}</span></h2>
+  <div class="displayer">
+    <h2>Temperature<span>{tempToday.slice(0,2) + '.' + tempToday.slice(2)} °C</span>Date<span>{inputtedDate ? inputtedDate : date}</span></h2>
+    <select bind:value={tempToday} name="temp" id="temp">
+      {#each randomTemps as temp}
+        <option value="{temp}">{temp.slice(0,2) + '.' + temp.slice(2)}</option>
+      {/each}
+    </select>
+    <button id="submit" type="submit" on:click={submitTemp}>Submit</button>
+  </div>
   {/if}
-  <label for="manual">Format: YYYY-MM-DD HH:MM</label>
-  <input placeholder="Manual input" type='text' name="manual" bind:value={inputtedDate}>
   <div class="submitter">
     <select bind:value={tempToday} name="temp" id="temp">
       {#each randomTemps as temp}
         <option value="{temp}">{temp.slice(0,2) + '.' + temp.slice(2)}</option>
       {/each}
     </select>
-    <button type="submit" on:click={submitTemp}>Submit</button>
+  </div>
+  <div class="displayer">
+    <input placeholder="Manual input" type='text' name="manual" bind:value={inputtedDate}>
+    <label for="manual">Format: YYYY-MM-DD HH:MM</label>
   </div>
 </div>
